@@ -28,7 +28,7 @@ const ResetPasswordPage = async () => {
         <div className="flex justify-center gap-2 md:justify-start">
           <Link href="#" className="flex items-center gap-2 font-medium">
             <div className="flex size-8 items-center justify-center">
-                 <ElysianEmporiumLogo className="size-8 rounded-sm" />
+              <ElysianEmporiumLogo className="size-8 rounded-sm" />
             </div>
             Elysian Emporium Store.
           </Link>
