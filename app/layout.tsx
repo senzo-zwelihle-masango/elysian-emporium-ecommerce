@@ -8,6 +8,7 @@ import { ourFileRouter } from '@/app/api/uploadthing/core'
 import { Toaster } from '@/components/ui/sonner'
 import { ReactLenis } from '@/components/providers/lenis-provider'
 import { NextThemeProvider } from '@/components/providers/next-themes-provider'
+import { NotificationProvider } from '@/components/providers/notification-provider'
 
 import './globals.css'
 
@@ -58,7 +59,8 @@ export default function RootLayout({
               routerConfig={extractRouterConfig(ourFileRouter)}
             />
             <Toaster theme="system" />
-            {children}
+
+            <NotificationProvider>{children}</NotificationProvider>
           </NextThemeProvider>
         </body>
       </html>
