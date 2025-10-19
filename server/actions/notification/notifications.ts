@@ -1,18 +1,18 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { headers } from "next/headers"
-import { prisma } from "@/lib/prisma/client"
-import { auth } from "@/lib/auth"
+import { revalidatePath } from 'next/cache'
+import { headers } from 'next/headers'
+import { prisma } from '@/lib/prisma/client'
+import { auth } from '@/lib/auth'
 
 type NotificationType =
-  | "information"
-  | "warning"
-  | "error"
-  | "success"
-  | "reminder"
-  | "alert"
-  | "message"
+  | 'information'
+  | 'warning'
+  | 'error'
+  | 'success'
+  | 'reminder'
+  | 'alert'
+  | 'message'
 
 type PrismaUser = {
   id: string
@@ -21,10 +21,8 @@ type PrismaUser = {
 }
 
 //  user relation
-type NotificationWithUser = Awaited<
-  ReturnType<typeof prisma.notification.findMany>
->[number] & {
-  user: Pick<PrismaUser, "id" | "name" | "email">
+type NotificationWithUser = Awaited<ReturnType<typeof prisma.notification.findMany>>[number] & {
+  user: Pick<PrismaUser, 'id' | 'name' | 'email'>
 }
 
 // get user session
@@ -51,8 +49,7 @@ export async function createNotificationAction(
     if (!targetUserId) {
       return {
         success: false,
-        message:
-          "Authentication required to generate notifications please sign in."
+        message: 'Authentication required to generate notifications please sign in.',
       }
     }
 
@@ -65,26 +62,26 @@ export async function createNotificationAction(
         read: false,
         userId: targetUserId,
         image: image || null,
-        images: images || []
-      }
+        images: images || [],
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
 
     if (userId) {
       revalidatePath(`/account/${userId}/notifications`)
     }
 
-    return { success: true, message: "Notification created successfully." }
+    return { success: true, message: 'Notification created successfully.' }
   } catch (error) {
-    console.error("Error creating notification:", error)
+    console.error('Error creating notification:', error)
     return {
       success: false,
       message: `Failed to create notification: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -109,7 +106,7 @@ export async function getNotificationsAction(params?: {
       return {
         notifications: null,
         success: false,
-        message: "Authentication required to view notifications."
+        message: 'Authentication required to view notifications.',
       }
     }
 
@@ -128,10 +125,10 @@ export async function getNotificationsAction(params?: {
     const notifications = await prisma.notification.findMany({
       where: {
         userId: targetUserId,
-        ...(params?.read !== undefined && { read: params.read })
+        ...(params?.read !== undefined && { read: params.read }),
       },
       orderBy: {
-        createdAt: "desc"
+        createdAt: 'desc',
       },
       take: params?.take || 50,
       skip: params?.skip || 0,
@@ -140,24 +137,24 @@ export async function getNotificationsAction(params?: {
           select: {
             id: true,
             name: true,
-            email: true
-          }
-        }
-      }
+            email: true,
+          },
+        },
+      },
     })
 
     return {
       notifications: notifications as NotificationWithUser[],
-      success: true
+      success: true,
     }
   } catch (error) {
-    console.error("Error fetching notifications:", error)
+    console.error('Error fetching notifications:', error)
     return {
       notifications: null,
       success: false,
       message: `Failed to fetch notifications: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -173,7 +170,7 @@ export async function markNotificationAsReadAction(
     if (!currentUser) {
       return {
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
@@ -182,42 +179,42 @@ export async function markNotificationAsReadAction(
     const notification = await prisma.notification.findFirst({
       where: {
         id: notificationId,
-        userId: targetUserId
-      }
+        userId: targetUserId,
+      },
     })
 
     if (!notification) {
       return {
         success: false,
-        message: "Notification not found or unauthorized."
+        message: 'Notification not found or unauthorized.',
       }
     }
 
     await prisma.notification.update({
       where: {
-        id: notificationId
+        id: notificationId,
       },
       data: {
-        read: true
-      }
+        read: true,
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
 
     if (targetUserId) {
       revalidatePath(`/account/${targetUserId}/notifications`)
     }
 
-    return { success: true, message: "Notification marked as read." }
+    return { success: true, message: 'Notification marked as read.' }
   } catch (error) {
-    console.error("Error marking notification as read:", error)
+    console.error('Error marking notification as read:', error)
     return {
       success: false,
       message: `Failed to mark notification as read: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -232,7 +229,7 @@ export async function markAllNotificationsAsReadAction(
     if (!currentUser) {
       return {
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
@@ -241,16 +238,16 @@ export async function markAllNotificationsAsReadAction(
     const result = await prisma.notification.updateMany({
       where: {
         userId: targetUserId,
-        read: false
+        read: false,
       },
       data: {
-        read: true
-      }
+        read: true,
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
 
     if (targetUserId) {
       revalidatePath(`/account/${targetUserId}/notifications`)
@@ -258,15 +255,15 @@ export async function markAllNotificationsAsReadAction(
 
     return {
       success: true,
-      message: `${result.count} notifications marked as read.`
+      message: `${result.count} notifications marked as read.`,
     }
   } catch (error) {
-    console.error("Error marking all notifications as read:", error)
+    console.error('Error marking all notifications as read:', error)
     return {
       success: false,
       message: `Failed to mark notifications as read: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -281,52 +278,51 @@ export async function bulkMarkNotificationsAsReadAction(
     if (!currentUser) {
       return {
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
     const notifications = await prisma.notification.findMany({
       where: {
         id: { in: notificationIds },
-        userId: currentUser.id
+        userId: currentUser.id,
       },
-      select: { id: true }
+      select: { id: true },
     })
 
     if (notifications.length !== notificationIds.length) {
       return {
         success: false,
-        message:
-          "Some notifications were not found or you are not authorized to modify them."
+        message: 'Some notifications were not found or you are not authorized to modify them.',
       }
     }
 
     const result = await prisma.notification.updateMany({
       where: {
         id: { in: notificationIds },
-        userId: currentUser.id
+        userId: currentUser.id,
       },
       data: {
-        read: true
-      }
+        read: true,
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
     revalidatePath(`/account/${currentUser.id}/notifications`)
 
     return {
       success: true,
-      message: `${result.count} notifications marked as read.`
+      message: `${result.count} notifications marked as read.`,
     }
   } catch (error) {
-    console.error("Error bulk marking notifications as read:", error)
+    console.error('Error bulk marking notifications as read:', error)
     return {
       success: false,
       message: `Failed to mark notifications as read: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -342,7 +338,7 @@ export async function deleteNotificationAction(
     if (!currentUser) {
       return {
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
@@ -351,39 +347,39 @@ export async function deleteNotificationAction(
     const notification = await prisma.notification.findFirst({
       where: {
         id: notificationId,
-        userId: targetUserId
-      }
+        userId: targetUserId,
+      },
     })
 
     if (!notification) {
       return {
         success: false,
-        message: "Notification not found or unauthorized."
+        message: 'Notification not found or unauthorized.',
       }
     }
 
     await prisma.notification.delete({
       where: {
-        id: notificationId
-      }
+        id: notificationId,
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
 
     if (targetUserId) {
       revalidatePath(`/account/${targetUserId}/notifications`)
     }
 
-    return { success: true, message: "Notification deleted successfully." }
+    return { success: true, message: 'Notification deleted successfully.' }
   } catch (error) {
-    console.error("Error deleting notification:", error)
+    console.error('Error deleting notification:', error)
     return {
       success: false,
       message: `Failed to delete notification: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }
@@ -400,27 +396,27 @@ export async function getUnreadNotificationCountAction(
       return {
         count: 0,
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
     const count = await prisma.notification.count({
       where: {
         userId: targetUserId,
-        read: false
-      }
+        read: false,
+      },
     })
 
     return {
       count,
-      success: true
+      success: true,
     }
   } catch (error) {
-    console.error("Error getting unread count:", error)
+    console.error('Error getting unread count:', error)
     return {
       count: 0,
       success: false,
-      message: "Failed to get unread count."
+      message: 'Failed to get unread count.',
     }
   }
 }
@@ -435,49 +431,48 @@ export async function bulkDeleteNotificationsAction(
     if (!currentUser) {
       return {
         success: false,
-        message: "Authentication required."
+        message: 'Authentication required.',
       }
     }
 
     const notifications = await prisma.notification.findMany({
       where: {
         id: { in: notificationIds },
-        userId: currentUser.id
+        userId: currentUser.id,
       },
-      select: { id: true }
+      select: { id: true },
     })
 
     if (notifications.length !== notificationIds.length) {
       return {
         success: false,
-        message:
-          "Some notifications were not found or you are not authorized to delete them."
+        message: 'Some notifications were not found or you are not authorized to delete them.',
       }
     }
 
     const result = await prisma.notification.deleteMany({
       where: {
         id: { in: notificationIds },
-        userId: currentUser.id
-      }
+        userId: currentUser.id,
+      },
     })
 
-    revalidatePath("/notifications")
-    revalidatePath("/admin/notifications")
-    revalidatePath("/admin")
+    revalidatePath('/notifications')
+    revalidatePath('/admin/notifications')
+    revalidatePath('/admin')
     revalidatePath(`/account/${currentUser.id}/notifications`)
 
     return {
       success: true,
-      message: `${result.count} notifications deleted successfully.`
+      message: `${result.count} notifications deleted successfully.`,
     }
   } catch (error) {
-    console.error("Error bulk deleting notifications:", error)
+    console.error('Error bulk deleting notifications:', error)
     return {
       success: false,
       message: `Failed to delete notifications: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
     }
   }
 }

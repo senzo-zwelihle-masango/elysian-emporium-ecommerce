@@ -25,7 +25,9 @@ export function useNotifications() {
         setNotifications(result.notifications)
       }
     } catch (error) {
-      toast.error('Failed to fetch notifications')
+      toast.error(
+        `Failed to fetch notifications: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
     } finally {
       setLoading(false)
     }
@@ -38,7 +40,9 @@ export function useNotifications() {
         setUnreadCount(result.count)
       }
     } catch (error) {
-      toast.error('Failed to fetch unread count')
+      toast.error(
+        `Failed to fetch unread count: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
     }
   }
 
@@ -56,7 +60,9 @@ export function useNotifications() {
       }
       return false
     } catch (error) {
-      toast.error('Failed to mark notification as read')
+      toast.error(
+        `Failed to mark notification as read: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
       return false
     }
   }
@@ -71,7 +77,9 @@ export function useNotifications() {
       }
       return false
     } catch (error) {
-      toast.error('Failed to mark all notifications as read')
+      toast.error(
+        `Failed to mark all notifications as read: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
       return false
     }
   }

@@ -136,7 +136,7 @@ const data = {
       url: '/admin/feedback',
       icon: HeartHandshakeIcon,
     },
-      {
+    {
       title: 'Archives',
       url: '/admin/archives',
       icon: ArchiveIcon,

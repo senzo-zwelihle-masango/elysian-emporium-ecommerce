@@ -1,4 +1,4 @@
-import { NotificationType } from "@/lib/generated/prisma"
+import { NotificationType } from '@/lib/generated/prisma'
 
 export interface Notification {
   id: string
