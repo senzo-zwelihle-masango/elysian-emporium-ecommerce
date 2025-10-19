@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
-
+import { Textarea } from '@/components/ui/textarea'
 import { UploadDropzone } from '@/utils/upload/uploadthing'
 
 import { tryCatch } from '@/hooks/use-try-catch'
@@ -256,7 +256,7 @@ const UpdateBillboardForm = ({ categories, products, data }: UpdateBillboardForm
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="description" {...field} />
+                <Textarea placeholder="description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

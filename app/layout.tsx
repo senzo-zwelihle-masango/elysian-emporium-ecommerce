@@ -1,5 +1,5 @@
 import { metadata } from '@/lib/metadata'
-import { aeonikAir, aeonikMono, aeonik } from '@/lib/font'
+import { geistSans, geistMono } from '@/lib/font'
 
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
@@ -41,7 +41,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${aeonikAir.variable} ${aeonikMono.variable} ${aeonik.variable} font-aeonik selection:bg-ultramarine-800 antialiased selection:text-white`}
+          className={`${geistSans.variable} ${geistMono.variable} selection:bg-ultramarine-800 font-sans antialiased selection:text-white`}
         >
           <NextThemeProvider
             attribute="class"

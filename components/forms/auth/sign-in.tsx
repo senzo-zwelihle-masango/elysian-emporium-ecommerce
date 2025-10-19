@@ -169,21 +169,27 @@ const SignInForm = ({ className, ...props }: React.ComponentProps<'div'>) => {
                   </div>
                 </div>
 
-                {/* Email/Password Sign In */}
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? (
-                    <Spinner />
-                  ) : (
-                    <>
-                      Sign In
-                      {lastLoginMethod === 'password' && (
-                        <Badge variant="secondary" className="ml-2 text-[10px]">
-                          Last used
-                        </Badge>
-                      )}
-                    </>
-                  )}
-                </Button>
+                <div className="relative">
+                  {' '}
+                  {/* Email/Password Sign In */}
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? (
+                      <Spinner />
+                    ) : (
+                      <>
+                        Sign In
+                        {lastLoginMethod === 'email' && (
+                          <Badge
+                            variant="default"
+                            className="absolute top-0 right-0 translate-x-1 -translate-y-1 text-[10px]"
+                          >
+                            Last used
+                          </Badge>
+                        )}
+                      </>
+                    )}
+                  </Button>
+                </div>
 
                 {/* Divider */}
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

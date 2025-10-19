@@ -1,7 +1,7 @@
-import "server-only"
+import 'server-only'
 
-import { unstable_noStore as noStore } from "next/cache"
-import { prisma } from "@/lib/prisma/client"
+import { unstable_noStore as noStore } from 'next/cache'
+import { prisma } from '@/lib/prisma/client'
 
 export async function fetchAllBillboards() {
   noStore()
@@ -18,13 +18,13 @@ export async function fetchAllBillboards() {
       category: {
         select: {
           id: true,
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
     },
     orderBy: {
-      createdAt: "desc"
-    }
+      createdAt: 'desc',
+    },
   })
 
   return data

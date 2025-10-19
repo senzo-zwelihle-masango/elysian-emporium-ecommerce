@@ -9,9 +9,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-aeonik-air: var(--font-aeonik-air);
-  --font-aeonik-mono: var(--font-aeonik-mono);
-  --font-aeonik: var(--font-aeonik);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -110,7 +109,7 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: oklch(0.1067 0 0);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.4248 0.26 278.15);
   --sidebar-primary-foreground: oklch(1 0 0);
@@ -167,4 +166,10 @@ html.lenis body {
   transition-property: overflow;
   transition-duration: 1ms;
   transition-behavior: allow-discrete;
+}
+
+/* blocknote shadcn font */
+.bn-editor,
+.bn-editor * {
+  font-family: var(--font-geist-sans), sans-serif;
 }

@@ -1,12 +1,12 @@
-import React from "react"
-import { notFound } from "next/navigation"
-import { unstable_noStore as noStore } from "next/cache"
+import React from 'react'
+import { notFound } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
 
-import { prisma } from "@/lib/prisma/client"
+import { prisma } from '@/lib/prisma/client'
 
-import { Container } from "@/components/ui/container"
+import { Container } from '@/components/ui/container'
 
-import UpdateBillboardForm from "@/components/admin/forms/update/update-billboard"
+import UpdateBillboardForm from '@/components/admin/forms/update/update-billboard'
 
 type Params = Promise<{ billboardId: string }>
 
@@ -14,7 +14,7 @@ async function fetchBillboardId(id: string) {
   noStore()
   const data = await prisma.billboard.findUnique({
     where: {
-      id: id
+      id: id,
     },
     select: {
       id: true,
@@ -27,8 +27,8 @@ async function fetchBillboardId(id: string) {
       featuredProductId: true,
 
       createdAt: true,
-      updatedAt: true
-    }
+      updatedAt: true,
+    },
   })
 
   if (!data) {
@@ -44,8 +44,8 @@ async function fetchCategories() {
   const categories = await prisma.category.findMany({
     select: {
       id: true,
-      name: true
-    }
+      name: true,
+    },
   })
 
   return categories
@@ -60,13 +60,13 @@ async function fetchProducts() {
       name: true,
       brand: {
         select: {
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
     },
     orderBy: {
-      name: "asc"
-    }
+      name: 'asc',
+    },
   })
 
   return products
@@ -79,23 +79,19 @@ const UpdateCollectionPage = async ({ params }: { params: Params }) => {
   const [data, categories, products] = await Promise.all([
     fetchBillboardId(billboardId),
     fetchCategories(),
-    fetchProducts()
+    fetchProducts(),
   ])
 
   return (
     <Container
       id="categories"
-      size={"2xl"}
-      alignment={"none"}
-      height={"screen"}
-      padding={"px-sm"}
+      size={'2xl'}
+      alignment={'none'}
+      height={'screen'}
+      padding={'px-sm'}
       className="my-4"
     >
-      <UpdateBillboardForm
-        data={data}
-        categories={categories}
-        products={products}
-      />
+      <UpdateBillboardForm data={data} categories={categories} products={products} />
     </Container>
   )
 }

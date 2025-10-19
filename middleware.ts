@@ -1,19 +1,35 @@
-import { betterFetch } from '@better-fetch/fetch'
-import type { auth } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
-
-type Session = typeof auth.$Infer.Session
+import { getSessionCookie } from 'better-auth/cookies'
 
 export async function middleware(request: NextRequest) {
-  const { data: session } = await betterFetch<Session>('/api/auth/get-session', {
-    baseURL: request.nextUrl.origin,
-    headers: {
-      cookie: request.headers.get('cookie') || '',
-    },
-  })
+  const { pathname } = request.nextUrl
 
-  if (!session) {
-    return NextResponse.redirect(new URL('/sign-in', request.url))
+  // Skip static files and API routes
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.includes('.') ||
+    pathname === '/favicon.ico'
+  ) {
+    return NextResponse.next()
+  }
+
+  // Skip auth check for public pages
+  if (
+    pathname === '/maintenance' ||
+    pathname === '/sign-in' ||
+    pathname === '/sign-up' ||
+    pathname === '/'
+  ) {
+    return NextResponse.next()
+  }
+
+  // Auth check for protected routes
+  if (pathname.startsWith('/admin') || pathname.startsWith('/account')) {
+    const sessionCookie = getSessionCookie(request)
+    if (!sessionCookie) {
+      return NextResponse.redirect(new URL('/sign-in', request.url))
+    }
   }
 
   return NextResponse.next()

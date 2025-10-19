@@ -1,24 +1,24 @@
-import React from "react"
-import { notFound, redirect } from "next/navigation"
-import { unstable_noStore as noStore } from "next/cache"
-import Link from "next/link"
-import Image from "next/image"
+import React from 'react'
+import { notFound, redirect } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { prisma } from "@/lib/prisma/client"
+import { prisma } from '@/lib/prisma/client'
 
-import { Button } from "@/components/ui/button"
-import { Container } from "@/components/ui/container"
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
-} from "@/components/ui/card"
-import { DeleteButton } from "@/components/ui/form-button"
+  CardTitle,
+} from '@/components/ui/card'
+import { DeleteButton } from '@/components/ui/form-button'
 
-import { deleteBillboardAction } from "@/server/actions/admin/billboard"
+import { deleteBillboardAction } from '@/server/actions/admin/billboard'
 
 type Params = Promise<{ billboardId: string }>
 
@@ -30,8 +30,8 @@ const DeleteBillboardPage = async ({ params }: { params: Params }) => {
     where: { id: billboardId },
     include: {
       category: true,
-      featuredProduct: true
-    }
+      featuredProduct: true,
+    },
   })
 
   if (!billboard) {
@@ -40,12 +40,12 @@ const DeleteBillboardPage = async ({ params }: { params: Params }) => {
 
   return (
     <Container
-      size={"2xl"}
-      alignment={"none"}
-      height={"full"}
-      padding={"px-sm"}
-      gap={"none"}
-      flow={"none"}
+      size={'2xl'}
+      alignment={'none'}
+      height={'full'}
+      padding={'px-sm'}
+      gap={'none'}
+      flow={'none'}
       id="delete"
       className="my-4"
     >
@@ -53,8 +53,7 @@ const DeleteBillboardPage = async ({ params }: { params: Params }) => {
         <CardHeader>
           <CardTitle>Are you absolutely sure?</CardTitle>
           <CardDescription>
-            This action cannot be undone. This will permanently delete the
-            following billboard:
+            This action cannot be undone. This will permanently delete the following billboard:
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -89,9 +88,9 @@ const DeleteBillboardPage = async ({ params }: { params: Params }) => {
           </Button>
           <form
             action={async () => {
-              "use server"
+              'use server'
               await deleteBillboardAction(billboardId)
-              redirect("/admin/billboards")
+              redirect('/admin/billboards')
             }}
           >
             <DeleteButton text="Delete" />

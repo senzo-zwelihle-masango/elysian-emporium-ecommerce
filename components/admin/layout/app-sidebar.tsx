@@ -17,6 +17,7 @@ import {
   MapPinIcon,
   PackageOpenIcon,
   SettingsIcon,
+  ShieldUserIcon,
   ShoppingBagIcon,
   SparklesIcon,
   TablePropertiesIcon,
@@ -59,11 +60,11 @@ const data = {
       url: '/admin/analytics',
       icon: GaugeIcon,
     },
-    // {
-    //   title: 'Organization',
-    //   url: '/admin/organization',
-    //   icon: ShieldUserIcon,
-    // },
+    {
+      title: 'Organization',
+      url: '/admin/organization',
+      icon: ShieldUserIcon,
+    },
     {
       title: 'Orders',
       url: '/admin/orders',
@@ -135,11 +136,6 @@ const data = {
       title: 'Feedback',
       url: '/admin/feedback',
       icon: HeartHandshakeIcon,
-    },
-    {
-      title: 'Archives',
-      url: '/admin/archives',
-      icon: ArchiveIcon,
     },
 
     {
