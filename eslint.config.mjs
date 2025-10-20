@@ -20,6 +20,8 @@ const eslintConfig = [
       'next-env.d.ts',
       'lib/generated/**',
       'components/event-calendar/calendar-wrapper.tsx',
+      'components/motion-primitives/**',
+      'hooks/use-prevent-scroll.tsx',
     ],
   },
 ]

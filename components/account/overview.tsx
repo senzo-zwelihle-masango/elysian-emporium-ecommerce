@@ -73,22 +73,9 @@ const ActivityItem = ({ activity }: { activity: RecentActivity }) => {
     }
   }
 
-  const getActivityColor = () => {
-    switch (activity.type) {
-      case 'order':
-        return 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
-      case 'review':
-        return 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400'
-      case 'favorite':
-        return 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400'
-      default:
-        return 'bg-gray-100 text-gray-600 dark:bg-gray-900/20 dark:text-gray-400'
-    }
-  }
-
   return (
     <div className="hover:bg-muted/50 flex items-start gap-3 rounded-lg p-3 transition-colors">
-      <div className={`rounded-full p-2 ${getActivityColor()}`}>{getActivityIcon()}</div>
+      <div className={`rounded-full p-2`}>{getActivityIcon()}</div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium">{activity.title}</p>
         <p className="text-muted-foreground truncate text-xs">{activity.description}</p>

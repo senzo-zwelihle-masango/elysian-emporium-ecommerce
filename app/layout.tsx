@@ -1,5 +1,4 @@
 import { metadata } from '@/lib/metadata'
-import { geistSans, geistMono } from '@/lib/font'
 
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { extractRouterConfig } from 'uploadthing/server'
@@ -11,6 +10,7 @@ import { NextThemeProvider } from '@/components/providers/next-themes-provider'
 import { NotificationProvider } from '@/components/providers/notification-provider'
 
 import './globals.css'
+import { aeonik, aeonikAir, aeonikMono } from '@/lib/font'
 
 export { metadata }
 
@@ -41,7 +41,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} selection:bg-ultramarine-800 font-sans antialiased selection:text-white`}
+          className={`${aeonikAir.variable} ${aeonikMono.variable} ${aeonik.variable} selection:bg-ultramarine-800 font-aeonik antialiased selection:text-white`}
         >
           <NextThemeProvider
             attribute="class"

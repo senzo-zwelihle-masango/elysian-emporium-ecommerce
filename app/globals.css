@@ -9,8 +9,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-aeonik-air: var(--font-aeonik-air);
+  --font-aeonik-mono: var(--font-aeonik-mono);
+  --font-aeonik: var(--font-aeonik);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -171,5 +172,5 @@ html.lenis body {
 /* blocknote shadcn font */
 .bn-editor,
 .bn-editor * {
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-aeonik), sans-serif;
 }
