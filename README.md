@@ -10,8 +10,8 @@ Elysian Emporium is a full-featured ecommerce store with advanced admin capabili
 
 ## Resources and useful links
 
-- Figma Design: <https://www.figma.com/community/file/1562082852012008248>
-- Live Link: <https://ethereal-notes-application.vercel.app/>
+- Figma Design: <https://www.figma.com/community/file/1562082852012008248/elysian-emporium-ecommerce>
+- Live Link: <https://elysian-emporium-ecommerce.vercel.app/>
 
 ## Tech Stack
 
